@@ -57,7 +57,7 @@ Object.values(sequelize.models).forEach((model) => {
 // Middleware
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -128,9 +128,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("/", (req, res) => {
-  res.send("Api is running");
-});
+
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/customers", require("./routes/customers"));
 app.use("/api/payments", require("./routes/payments"));
@@ -202,6 +200,12 @@ app.post("/api/bot/toggle", checkSession, (req, res) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: "Something broke!" });
+});
+
+//test route
+
+app.use("/", (req, res) => {
+  res.send("Api is running");
 });
 
 // Start the server after syncing DB
